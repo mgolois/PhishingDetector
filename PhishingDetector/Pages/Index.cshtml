@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row justify-content-center">
+    <h1 class="display-4 text-center">Phishing Detector Project</h1>
+
+    <div style="margin-top:25px;" class="col-8 text-center">
+        <form method="post" class="mb-3 row">
+            <label for="txtUrl" class="col-sm-2 col-form-label">Enter Valid URL</label>
+            <div class="col-sm-8">
+                <input type="text" asp-for="UrlToValidate" class="form-control" id="txtUrl" placeholder="http://site.com">
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+             </div>
+
+            @if (Model.PredictionResult != null)
+            {
+                <div style="margin-top:25px;" class="alert @( !Model.PredictionResult.IsSuccess ? "alert-secondary" : Model.PredictionResult.Data.PredictionClassName)" role="alert">
+                    URL: @Model.PredictionResult.Url
+                    <br/>
+                    <br/>
+                    <strong>@(Model.PredictionResult.IsSuccess ? Model.PredictionResult.Data.Prediction : Model.PredictionResult.ErrorMessage)</strong>
+                </div>
+            }
+        </form>
+    </div>
+</div>
